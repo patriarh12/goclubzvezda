@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Го-клуб «Звезда»</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Го-клуб «Звезда»</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Игроки<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">О клубе</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Контакты</a>
+                    </li>
+                </ul>
+            </div>
+            <form class="form-inline">
+                <button @click="newUserForm" class="btn btn-outline-success" type="button">Вступить</button>
+            </form>
+        </nav>
+
+        <div class="container">
+            <div class="row card-header">
+                <div class="col">
+                    Имя
+                </div>
+                <div class="col">
+                    Титул
+                </div>
+                <div class="col">
+                    Рейтинг
+                </div>
+                <div class="col">
+                    Дата вступления
+                </div>
+            </div>
+            <users-list-readonly v-bind:users="users"></users-list-readonly>
+        </div>
+
+        <new-user-form></new-user-form>
+    </div>
+
+    <script id="users-list" type="text/x-template">
+        <ul class="list-group">
+        <li v-for="user in users" :key="user.id" class="list-group-item">
+            <div class="row">
+                <div class="col">{{ user.firstname }}</div>
+                <div class="col">{{ user.tytle }}</div>
+                <div class="col">{{ user.rating }}</div>
+                <div class="col">{{ user.dateofentry }}</div>
+            </div>
+        </li>
+        </ul>
+    </script>
+
+</body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script>
+
+    var usersListReadonly = {
+        name: 'UsersListReadonly',
+        template: '#users-list',
+        props: {
+            users: {
+                type: Array,
+                required: true
+            }
+        }
+    };
+
+    var userForm = {
+        name: 'UserForm',
+        template: '#userForm'
+    };
+
+    var app = new Vue({
+        el: '#app',
+        components: {
+            'users-list-readonly': usersListReadonly
+        },
+        data: function () {
+            return {
+                users: [{
+                    id: 1234,
+                    firstname: 'Сергей',
+                    surname: 'Валюшицкий',
+                    patronymic: 'Евгеньевич',
+                    tytle: '12 кю',
+                    rating: 934,
+                    dateofentry: '02 января 2015',
+                    pic: 'http://www.avatarsinpixels.com/Public/images/previews/minipix4.png'
+                }, {
+                    id: 1235,
+                    firstname: 'Александр',
+                    surname: 'Старых',
+                    patronymic: 'Александрович',
+                    tytle: '4 кю',
+                    rating: 1560,
+                    dateofentry: '02 января 2015',
+                    pic: 'http://www.avatarsinpixels.com/Public/images/previews/minipix3.png'
+                }, {
+                    firstname: 'Ирина',
+                    surname: 'Кондратьева',
+                    patronymic: 'Игоревна',
+                    tytle: '9 кю',
+                    rating: 1203,
+                    dateofentry: '25 мая 2017',
+                    pic: 'http://www.avatarsinpixels.com/Public/images/previews/minipix2.png'
+                }, {
+                    id: 1236,
+                    firstname: 'Андрей',
+                    surname: 'Горев',
+                    patronymic: 'Павлович',
+                    tytle: '13 кю',
+                    rating: 840,
+                    dateofentry: '5 февраля 2017',
+                    pic: null
+                }]
+            }
+        },
+        methods: {
+            newUserForm: function () {
+
+            }
+        }
+    });
+</script>
+</html>
