@@ -30,46 +30,39 @@
             </form>
         </nav>
 
-        <div class="container">
-            <div class="row card-header">
-                <div class="col">
-                    Имя
-                </div>
-                <div class="col">
-                    Титул
-                </div>
-                <div class="col">
-                    Рейтинг
-                </div>
-                <div class="col">
-                    Дата вступления
-                </div>
-            </div>
-            <users-list-readonly v-bind:users="users"></users-list-readonly>
-        </div>
+        <users-list v-bind:users="users"></users-list>
 
-        <new-user-form></new-user-form>
     </div>
 
     <script id="users-list" type="text/x-template">
-        <ul class="list-group">
-        <li v-for="user in users" :key="user.id" class="list-group-item">
-            <div class="row">
-                <div class="col">{{ user.firstname }}</div>
-                <div class="col">{{ user.tytle }}</div>
-                <div class="col">{{ user.rating }}</div>
-                <div class="col">{{ user.dateofentry }}</div>
-            </div>
-        </li>
-        </ul>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Титул</th>
+                <th scope="col">Рейтинг</th>
+                <th scope="col">Дата вступления</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(user, index) in users" :key="user.id">
+                <th scope="row">{{ index + 1 }}</th>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.title }}</td>
+                <td>{{ user.rating }}</td>
+                <td>{{ user.dateofentry }}</td>
+            </tr>
+            </tbody>
+        </table>
     </script>
 
 </body>
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <script>
 
-    var usersListReadonly = {
-        name: 'UsersListReadonly',
+    var usersList = {
+        name: 'UsersList',
         template: '#users-list',
         props: {
             users: {
@@ -87,7 +80,7 @@
     var app = new Vue({
         el: '#app',
         components: {
-            'users-list-readonly': usersListReadonly
+            'users-list': usersList
         },
         data: function () {
             return {
@@ -96,7 +89,7 @@
                     firstname: 'Сергей',
                     surname: 'Валюшицкий',
                     patronymic: 'Евгеньевич',
-                    tytle: '12 кю',
+                    title: '12 кю',
                     rating: 934,
                     dateofentry: '02 января 2015',
                     pic: 'http://www.avatarsinpixels.com/Public/images/previews/minipix4.png'
@@ -105,7 +98,7 @@
                     firstname: 'Александр',
                     surname: 'Старых',
                     patronymic: 'Александрович',
-                    tytle: '4 кю',
+                    title: '4 кю',
                     rating: 1560,
                     dateofentry: '02 января 2015',
                     pic: 'http://www.avatarsinpixels.com/Public/images/previews/minipix3.png'
@@ -113,7 +106,7 @@
                     firstname: 'Ирина',
                     surname: 'Кондратьева',
                     patronymic: 'Игоревна',
-                    tytle: '9 кю',
+                    title: '9 кю',
                     rating: 1203,
                     dateofentry: '25 мая 2017',
                     pic: 'http://www.avatarsinpixels.com/Public/images/previews/minipix2.png'
@@ -122,7 +115,7 @@
                     firstname: 'Андрей',
                     surname: 'Горев',
                     patronymic: 'Павлович',
-                    tytle: '13 кю',
+                    title: '13 кю',
                     rating: 840,
                     dateofentry: '5 февраля 2017',
                     pic: null
