@@ -26,12 +26,13 @@
                 </ul>
             </div>
             <form class="form-inline">
-                <button @click="newUserForm" class="btn btn-outline-success" type="button">Вступить</button>
+                <button @click="openUserForm" class="btn btn-outline-success" type="button">Вступить</button>
             </form>
         </nav>
 
-        <users-list v-bind:users="users"></users-list>
-
+        <users-list :users="users"></users-list>
+        <hr>
+        <user-form></user-form>
     </div>
 
     <script id="users-list" type="text/x-template">
@@ -39,6 +40,7 @@
             <thead>
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">Фото</th>
                 <th scope="col">Имя</th>
                 <th scope="col">Титул</th>
                 <th scope="col">Рейтинг</th>
@@ -48,13 +50,48 @@
             <tbody>
             <tr v-for="(user, index) in users" :key="user.id">
                 <th scope="row">{{ index + 1 }}</th>
-                <td>{{ user.firstname }}</td>
+                <td>
+                    <img v-if="!user.pic" src="https://lh3.googleusercontent.com/X2Pb_rIIrbVRFZD_kUdBj0gGJw8LSduNW8a85A9aEHt0-EtqOni-ie7O_jBjtuydnzEX=w300" alt="User Pic" :title=user.name width="30px">
+                    <img v-else :src=user.pic alt='User Pic' :title=user.name width="40px">
+                </td>
+                <td>{{ fullName(user) }}</td>
                 <td>{{ user.title }}</td>
                 <td>{{ user.rating }}</td>
                 <td>{{ user.dateofentry }}</td>
             </tr>
             </tbody>
         </table>
+    </script>
+
+    <script id="new-user-form" type="text/x-template">
+        <div class="card">
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label for="formGroupFirstname">Имя</label>
+                        <input type="text" class="form-control" id="formGroupFirstname" placeholder="Имя">
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupLastname">Фамилия</label>
+                        <input type="text" class="form-control" id="formGroupLastname" placeholder="Фамилия">
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupPatronymic">Отчество</label>
+                        <input type="text" class="form-control" id="formGroupPatronymic" placeholder="Отчество">
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupRating">Рейтинг</label>
+                        <input type="text" class="form-control" id="formGroupRating" placeholder="1280">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
     </script>
 
 </body>
@@ -69,62 +106,69 @@
                 type: Array,
                 required: true
             }
+        },
+        methods: {
+            fullName: function (user) {
+                return user.firstname + " " + user.lastname
+            }
         }
     };
 
     var userForm = {
         name: 'UserForm',
-        template: '#userForm'
+        template: '#new-user-form'
     };
 
     var app = new Vue({
         el: '#app',
         components: {
-            'users-list': usersList
+            'users-list': usersList,
+            'user-form': userForm
         },
         data: function () {
             return {
-                users: [{
-                    id: 1234,
-                    firstname: 'Сергей',
-                    surname: 'Валюшицкий',
-                    patronymic: 'Евгеньевич',
-                    title: '12 кю',
-                    rating: 934,
-                    dateofentry: '02 января 2015',
-                    pic: 'http://www.avatarsinpixels.com/Public/images/previews/minipix4.png'
-                }, {
-                    id: 1235,
-                    firstname: 'Александр',
-                    surname: 'Старых',
-                    patronymic: 'Александрович',
-                    title: '4 кю',
-                    rating: 1560,
-                    dateofentry: '02 января 2015',
-                    pic: 'http://www.avatarsinpixels.com/Public/images/previews/minipix3.png'
-                }, {
-                    firstname: 'Ирина',
-                    surname: 'Кондратьева',
-                    patronymic: 'Игоревна',
-                    title: '9 кю',
-                    rating: 1203,
-                    dateofentry: '25 мая 2017',
-                    pic: 'http://www.avatarsinpixels.com/Public/images/previews/minipix2.png'
-                }, {
-                    id: 1236,
-                    firstname: 'Андрей',
-                    surname: 'Горев',
-                    patronymic: 'Павлович',
-                    title: '13 кю',
-                    rating: 840,
-                    dateofentry: '5 февраля 2017',
-                    pic: null
+                users: [
+                    {
+                        id: 1234,
+                        firstname: 'Сергей',
+                        lastname: 'Валюшицкий',
+                        patronymic: 'Евгеньевич',
+                        title: '12 кю',
+                        rating: 934,
+                        dateofentry: '02 января 2015',
+                        pic: 'http://www.avatarsinpixels.com/Public/images/previews/minipix4.png'
+                    }, {
+                        id: 1235,
+                        firstname: 'Александр',
+                        lastname: 'Старых',
+                        patronymic: 'Александрович',
+                        title: '4 кю',
+                        rating: 1560,
+                        dateofentry: '02 января 2015',
+                        pic: 'http://www.avatarsinpixels.com/Public/images/previews/minipix3.png'
+                    }, {
+                        firstname: 'Ирина',
+                        lastname: 'Кондратьева',
+                        patronymic: 'Игоревна',
+                        title: '9 кю',
+                        rating: 1203,
+                        dateofentry: '25 мая 2017',
+                        pic: 'http://www.avatarsinpixels.com/Public/images/previews/minipix2.png'
+                    }, {
+                        id: 1236,
+                        firstname: 'Андрей',
+                        lastname: 'Горев',
+                        patronymic: 'Павлович',
+                        title: '13 кю',
+                        rating: 840,
+                        dateofentry: '5 февраля 2017',
+                        pic: null
                 }]
             }
         },
         methods: {
-            newUserForm: function () {
-
+            openUserForm: function () {
+                console.log("CLICK!");
             }
         }
     });
