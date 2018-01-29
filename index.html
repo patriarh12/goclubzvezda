@@ -51,8 +51,7 @@
             <tr v-for="(user, index) in users" :key="user.id">
                 <th scope="row">{{ index + 1 }}</th>
                 <td>
-                    <img v-if="!user.pic" src="https://lh3.googleusercontent.com/X2Pb_rIIrbVRFZD_kUdBj0gGJw8LSduNW8a85A9aEHt0-EtqOni-ie7O_jBjtuydnzEX=w300" alt="User Pic" :title=user.name width="30px">
-                    <img v-else :src=user.pic alt='User Pic' :title=user.name width="40px">
+                    <img :src="userPic(user.pic)" alt="User Pic" :title="user.name" width="40px">
                 </td>
                 <td>{{ fullName(user) }}</td>
                 <td>{{ user.title }}</td>
@@ -110,6 +109,12 @@
         methods: {
             fullName: function (user) {
                 return user.firstname + " " + user.lastname
+            },
+            userPic: function (picURL) {
+                if(!picURL){
+                    return 'https://goo.gl/CR12gs'
+                }
+                return picURL
             }
         }
     };
